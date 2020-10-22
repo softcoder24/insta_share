@@ -2,6 +2,11 @@ import json
 from datetime import datetime
 import requests
 
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Credentials >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+username = "YOUR USERNAME"
+password = "PASSWORD"
+caption = "This is awesome"
 
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Login into instagram account >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -36,17 +41,15 @@ def login_instagram(username, password):
         cookies = login_response.cookies
         cookie_jar = cookies.get_dict()
         csrf_token = cookie_jar['csrftoken']
-        print("csrf_token: ", csrf_token)
         session_id = cookie_jar['sessionid']
-        print("session_id: ", session_id)
+        return csrf_token, session_id
     else:
         print("login failed ", login_response.text)
 
 
-def share_photo(photo):
+def share_photo(photo, caption):
     micro_time = int(datetime.now().timestamp())
-    csrf_token = "Place the csrf_token here"
-    session_id = "place the session_id here"
+    csrf_token, session_id = login_instagram(username, password)
 
     # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< upload a photo into instagram server >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -74,7 +77,6 @@ def share_photo(photo):
     if json_data["status"] == "ok":
 
         url = "https://www.instagram.com/create/configure/"
-        caption = "This is awesome"
 
         payload = 'upload_id=' + upload_id + '&caption=' + caption + '&usertags=&custom_accessibility_caption=&retry_timeout='
         headers = {
@@ -106,6 +108,4 @@ def share_photo(photo):
         print(json_data)
 
 
-share_photo(photo="toronto.jpg")
-
-
+share_photo(photo="toronto.jpg", caption)
