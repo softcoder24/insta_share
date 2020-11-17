@@ -9,9 +9,9 @@ This project provides you with functions to be able to do the followings:
  # Installation #
  
 ```bash
-    pip install requests
-    pip install jsonlib
-    pip install https://github.com/softcoder24/insta_share/archive/master.zip
+pip install requests
+pip install jsonlib
+pip install https://github.com/softcoder24/insta_share/archive/master.zip
 ```
  
  ## Usage ##
