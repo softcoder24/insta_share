@@ -16,9 +16,12 @@ class Instagram:
         login_url = 'https://www.instagram.com/accounts/login/ajax/'
 
         time = int(datetime.now().timestamp())
-
-        response = requests.get(url)
-        csrf = response.cookies['csrftoken']
+        
+        csrf_request_header = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko)"
+                          " Chrome/77.0.3865.120 Safari/537.36",
+        response = requests.get(url, csrf_request_header)
+        csrf = re.search(r'\"csrf_token\":\"(.*?)\"', response.text).group(1) 
 
         payload = {
             'username': username,
